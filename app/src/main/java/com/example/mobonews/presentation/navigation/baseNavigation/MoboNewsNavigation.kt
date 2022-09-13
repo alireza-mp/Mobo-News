@@ -9,7 +9,9 @@ import com.example.mobonews.presentation.ui.splashPage.SplashPage
 
 @Composable
 fun MoboNewsNavigation() {
+
     val navController = rememberNavController()
+
     NavHost(
         navController = navController,
         startDestination = Screens.SplashPage.route,

@@ -39,7 +39,11 @@ fun SplashPage(navController: NavController) {
 
     LaunchedEffect(Unit) {
         delay(1000)
-        navController.navigate(Screens.MainPage.route)
+        navController.navigate(Screens.MainPage.route){
+            popUpTo(Screens.SplashPage.route) {
+                inclusive = true
+            }
+        }
     }
 
 }

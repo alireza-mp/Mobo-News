@@ -23,7 +23,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mobonews.presentation.navigation.bottomNavigation.MainBNScreens
 import com.example.mobonews.presentation.theme.selector
-import com.example.mobonews.presentation.theme.white
 
 
 @Composable
@@ -63,12 +62,12 @@ private fun Content(
     navController: NavHostController,
     tabsPoint: List<Float>,
     items: List<MainBNScreens>,
-    cardHeight: Int,
-    cardWidth: Int,
+    selectorHeight: Int,
+    selectorWidth: Int,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    val cardXPointState = remember { mutableStateOf(tabsPoint[0].dp) }
+    val selectorXPointState = remember { mutableStateOf(tabsPoint[0].dp) }
 
     BottomNavigation(
         modifier = Modifier.fillMaxWidth(),
@@ -77,7 +76,7 @@ private fun Content(
         for (index in items.indices) {
             BottomNavigationItem(
                 icon = {
-                    if (currentRoute == items[index].screen_route) {
+                    if (currentRoute == items[index].screenRoute) {
                         Image(painterResource(id = items[index].enabledIcon),
                             contentDescription = null)
                     } else {
@@ -87,12 +86,13 @@ private fun Content(
                 },
                 selectedContentColor = MaterialTheme.colors.primary,
                 unselectedContentColor = MaterialTheme.colors.secondary,
-                selected = currentRoute == items[index].screen_route,
+                selected = currentRoute == items[index].screenRoute,
                 onClick = {
-                    cardXPointState.value = tabsPoint[index].dp
-                    navController.navigate(items[index].screen_route) {
-                        navController.graph.startDestinationRoute?.let { screen_route ->
+                    selectorXPointState.value = tabsPoint[index].dp
+                    navController.navigate(items[index].screenRoute) {
+                        navController.currentDestination?.route?.let { screen_route ->
                             popUpTo(screen_route) {
+                                inclusive = true // remove last page form back stack
                                 saveState = true
                             }
                         }
@@ -104,22 +104,31 @@ private fun Content(
         }
     }
 
-    SelectorUI(cardWidth = cardWidth, cardHeight, cardXPointState)
+    SelectorUI(selectorWidth = selectorWidth,
+        selectorHeight = selectorHeight,
+        selectorXPointState = selectorXPointState)
 
 }
 
 @Composable
-private fun SelectorUI(cardWidth: Int, cardHeight: Int, cardXPointState: MutableState<Dp>) {
-    val cardXAnim by animateDpAsState(
-        targetValue = cardXPointState.value,
+private fun SelectorUI(
+    selectorWidth: Int,
+    selectorHeight: Int,
+    selectorXPointState: MutableState<Dp>,
+) {
+
+    val selectorXAnim by animateDpAsState(
+        targetValue = selectorXPointState.value,
         animationSpec = tween(
             durationMillis = 200,
             easing = LinearEasing
         )
     )
+
+    // selector
     Card(
-        modifier = Modifier.size(width = cardWidth.dp, height = cardHeight.dp)
-            .offset(x = cardXAnim)
+        modifier = Modifier.size(width = selectorWidth.dp, height = selectorHeight.dp)
+            .offset(x = selectorXAnim)
             .coloredShadow(
                 color = MaterialTheme.colors.primary,
                 alpha = 0.6f,
@@ -134,6 +143,7 @@ private fun SelectorUI(cardWidth: Int, cardHeight: Int, cardXPointState: Mutable
         ) {}
 }
 
+// colored shadow
 private fun Modifier.coloredShadow(
     color: Color,
     alpha: Float = 0.2f,

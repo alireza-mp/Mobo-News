@@ -4,32 +4,36 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.mobonews.presentation.navigation.homePageNavigation.HomePageNavigation
 import com.example.mobonews.presentation.ui.bottomNavigationPages.addNewPage.AddNewPage
 import com.example.mobonews.presentation.ui.bottomNavigationPages.discoverPage.DiscoverPage
-import com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.HomePage
 import com.example.mobonews.presentation.ui.bottomNavigationPages.profilePage.ProfilePage
 import com.example.mobonews.presentation.ui.bottomNavigationPages.savePage.SavePage
 
 @Composable
-fun MainBottomNavigation(bNavigationController: NavHostController) {
+fun MainBottomNavigation(
+    bNavigationController: NavHostController, //main page bottom navigation controller
+) {
 
     NavHost(
         navController = bNavigationController,
-        startDestination = MainBNScreens.Home.screen_route,
+        startDestination = MainBNScreens.Home.screenRoute,
     ) {
-        composable(MainBNScreens.Home.screen_route) {
-            HomePage(bNavigationController)
+        composable(
+            route = MainBNScreens.Home.screenRoute,
+        ) {
+            HomePageNavigation()
         }
-        composable(MainBNScreens.Discover.screen_route) {
+        composable(MainBNScreens.Discover.screenRoute) {
             DiscoverPage(bNavigationController)
         }
-        composable(MainBNScreens.AddNew.screen_route) {
+        composable(MainBNScreens.AddNew.screenRoute) {
             AddNewPage(bNavigationController)
         }
-        composable(MainBNScreens.Save.screen_route) {
+        composable(MainBNScreens.Save.screenRoute) {
             SavePage(bNavigationController)
         }
-        composable(MainBNScreens.Profile.screen_route) {
+        composable(MainBNScreens.Profile.screenRoute) {
             ProfilePage(bNavigationController)
         }
     }

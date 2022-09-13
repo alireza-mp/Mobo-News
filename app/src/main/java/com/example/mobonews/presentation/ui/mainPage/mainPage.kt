@@ -13,8 +13,10 @@ import com.example.mobonews.presentation.ui.components.BottomNavigation
 
 @Composable
 fun MainPage() {
+
     // bottom navigation controller
     val bNavigationController = rememberNavController()
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         backgroundColor = MaterialTheme.colors.background,
