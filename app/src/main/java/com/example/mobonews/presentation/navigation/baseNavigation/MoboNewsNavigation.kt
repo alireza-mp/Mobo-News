@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mobonews.presentation.ui.mainPage.MainPage
 import com.example.mobonews.presentation.ui.splashPage.SplashPage
 
 @Composable
@@ -16,6 +17,8 @@ fun MoboNewsNavigation() {
         composable(route = Screens.SplashPage.route) {
             SplashPage(navController)
         }
+        composable(route = Screens.MainPage.route) {
+            MainPage()
+        }
     }
-
 }

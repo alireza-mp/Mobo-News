@@ -8,13 +8,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mobonews.R
+import com.example.mobonews.presentation.navigation.baseNavigation.Screens
 import com.example.mobonews.presentation.ui.components.BallProgress
+import kotlinx.coroutines.delay
 
 @Composable
 fun SplashPage(navController: NavController) {
@@ -34,9 +37,9 @@ fun SplashPage(navController: NavController) {
         )
     }
 
-   /* LaunchedEffect(Unit) {
+    LaunchedEffect(Unit) {
         delay(1000)
-        navController.navigate(Screens.SplashPage.route)
-    }*/
+        navController.navigate(Screens.MainPage.route)
+    }
 
 }
