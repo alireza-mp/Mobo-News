@@ -8,11 +8,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -26,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mobonews.presentation.navigation.bottomNavigation.MainBNScreens
+import com.example.mobonews.presentation.theme.selector
+import com.example.mobonews.presentation.theme.white
 
 
 @Composable
@@ -74,21 +72,21 @@ private fun Content(
 
     BottomNavigation(
         modifier = Modifier.fillMaxWidth(),
-        backgroundColor = Color.White
+        backgroundColor = MaterialTheme.colors.surface
     ) {
         for (index in items.indices) {
             BottomNavigationItem(
                 icon = {
-                    if(currentRoute == items[index].screen_route){
+                    if (currentRoute == items[index].screen_route) {
                         Image(painterResource(id = items[index].enabledIcon),
                             contentDescription = null)
-                    }else{
+                    } else {
                         Icon(painterResource(id = items[index].icon),
                             contentDescription = null)
                     }
                 },
-                selectedContentColor = Color(0xFFFF033E),
-                unselectedContentColor = Color(0xFFBFC3C8),
+                selectedContentColor = MaterialTheme.colors.primary,
+                unselectedContentColor = MaterialTheme.colors.secondary,
                 selected = currentRoute == items[index].screen_route,
                 onClick = {
                     cardXPointState.value = tabsPoint[index].dp
@@ -123,15 +121,15 @@ private fun SelectorUI(cardWidth: Int, cardHeight: Int, cardXPointState: Mutable
         modifier = Modifier.size(width = cardWidth.dp, height = cardHeight.dp)
             .offset(x = cardXAnim)
             .coloredShadow(
-                color = Color(0xFFFF033E),
+                color = MaterialTheme.colors.primary,
                 alpha = 0.6f,
                 borderRadius = 0.dp,
                 shadowRadius = 20.dp,
                 offsetY = 10.dp,
                 offsetX = 0.dp,
             ),
-        shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp),
-        backgroundColor = Color(0x99FF033E),
+        shape = MaterialTheme.shapes.selector,
+        backgroundColor = MaterialTheme.colors.primary.copy(alpha = 0.7f),
 
         ) {}
 }

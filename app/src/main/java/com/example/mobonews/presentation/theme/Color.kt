@@ -12,11 +12,11 @@ val white700 = Color(0xFFFAFAFA)
 val white = Color(0xFFFFFFFF)
 val black = Color(0xFF000000)
 
-val Colors.white: Color
+val Colors.White: Color
     @Composable
     get() = if (isLight) Color.White else Color.White
 
-val Colors.black: Color
+val Colors.Black: Color
     @Composable
     get() = if (isLight) Color.Black else Color.Black
 

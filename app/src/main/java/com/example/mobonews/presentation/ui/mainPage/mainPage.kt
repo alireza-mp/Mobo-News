@@ -3,6 +3,7 @@ package com.example.mobonews.presentation.ui.mainPage
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,6 +17,7 @@ fun MainPage() {
     val bNavigationController = rememberNavController()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        backgroundColor = MaterialTheme.colors.background,
         bottomBar = { BottomNavigation(bNavigationController) }
     ) {
         Box(Modifier.fillMaxSize().padding(it)) {
