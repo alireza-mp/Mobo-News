@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.dp
 
 val Shapes = Shapes(
     small = RoundedCornerShape(4.dp),
-    medium = RoundedCornerShape(4.dp),
+    medium = RoundedCornerShape(22.dp),
     large = RoundedCornerShape(0.dp)
 )
 
 // bottom navigation selector card radius
-val Shapes.selector: Shape
+val Shapes.bottomNavigationSelector: Shape
     @Composable
     get() = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)

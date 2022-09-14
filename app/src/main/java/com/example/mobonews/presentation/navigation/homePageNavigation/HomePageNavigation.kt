@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.home.HomePage
-import com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.newsDetail.NewsDetail
+import com.example.mobonews.presentation.ui.newsDetail.NewsDetail
 
 @Composable
 fun HomePageNavigation() {

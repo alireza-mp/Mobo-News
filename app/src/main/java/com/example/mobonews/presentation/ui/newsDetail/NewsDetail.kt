@@ -1,4 +1,4 @@
-package com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.newsDetail
+package com.example.mobonews.presentation.ui.newsDetail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
