@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
@@ -22,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mobonews.presentation.navigation.bottomNavigation.MainBNScreens
-import com.example.mobonews.presentation.theme.selector
+import com.example.mobonews.presentation.theme.bottomNavigationSelector
 
 
 @Composable
@@ -104,9 +107,11 @@ private fun Content(
         }
     }
 
-    SelectorUI(selectorWidth = selectorWidth,
+    SelectorUI(
+        selectorWidth = selectorWidth,
         selectorHeight = selectorHeight,
-        selectorXPointState = selectorXPointState)
+        selectorXPointState = selectorXPointState.value,
+    )
 
 }
 
@@ -114,11 +119,11 @@ private fun Content(
 private fun SelectorUI(
     selectorWidth: Int,
     selectorHeight: Int,
-    selectorXPointState: MutableState<Dp>,
+    selectorXPointState: Dp,
 ) {
 
     val selectorXAnim by animateDpAsState(
-        targetValue = selectorXPointState.value,
+        targetValue = selectorXPointState,
         animationSpec = tween(
             durationMillis = 200,
             easing = LinearEasing
@@ -137,7 +142,7 @@ private fun SelectorUI(
                 offsetY = 10.dp,
                 offsetX = 0.dp,
             ),
-        shape = MaterialTheme.shapes.selector,
+        shape = MaterialTheme.shapes.bottomNavigationSelector,
         backgroundColor = MaterialTheme.colors.primary.copy(alpha = 0.7f),
 
         ) {}
