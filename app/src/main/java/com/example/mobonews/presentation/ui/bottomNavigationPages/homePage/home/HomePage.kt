@@ -1,16 +1,15 @@
 package com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.mobonews.R
 import com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.flowing.FlowIngPage
 import com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.recommended.RecommendedPage
 import com.example.mobonews.presentation.ui.components.CustomTabRow
@@ -21,7 +20,7 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomePage(
     homePageNavHost: NavHostController,
@@ -34,29 +33,6 @@ fun HomePage(
         modifier = Modifier.fillMaxSize()
             .background(color = MaterialTheme.colors.background)
     ) {
-        Spacer(modifier = Modifier.padding(top = 12.dp))
-
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-            CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
-                IconButton(
-                    modifier = Modifier.align(Alignment.CenterEnd).padding(0.dp),
-                    onClick = {},
-                    content = {
-                        Image(
-                            modifier = Modifier.size(24.dp),
-                            painter = painterResource(R.drawable.ic_notifications),
-                            contentDescription = null,
-                        )
-                    }
-                )
-            }
-            Image(
-                modifier = Modifier.height(40.dp),
-                painter = painterResource(R.drawable.logo),
-                contentDescription = null,
-            )
-        }
-
         Spacer(modifier = Modifier.padding(top = 16.dp))
         // tab row
         CustomTabRow(

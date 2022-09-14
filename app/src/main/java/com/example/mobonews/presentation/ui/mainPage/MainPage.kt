@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.mobonews.presentation.navigation.bottomNavigation.MainBottomNavigation
 import com.example.mobonews.presentation.ui.components.BottomNavigation
+import com.example.mobonews.presentation.ui.components.TopAppBar
 
 @Composable
 fun MainPage() {
@@ -23,7 +24,10 @@ fun MainPage() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         backgroundColor = MaterialTheme.colors.background,
-        bottomBar = { BottomNavigation(bNavigationController) }
+        topBar = {
+            TopAppBar(navController = bNavigationController)
+        },
+        bottomBar = { BottomNavigation(navController = bNavigationController) }
     ) {
         Surface(
             modifier = Modifier.padding(it),
