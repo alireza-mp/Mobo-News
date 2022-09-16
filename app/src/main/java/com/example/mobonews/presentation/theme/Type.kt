@@ -1,6 +1,7 @@
 package com.example.mobonews.presentation.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -16,7 +17,7 @@ private val SHABNAM_BOLD = FontFamily(
     Font(R.font.shabnam_medium, FontWeight.Normal)
 )
 private val SHABNAM_LIGHT = FontFamily(
-    Font(R.font.shabnam_light, FontWeight.Normal)
+    Font(R.font.shabnam, FontWeight.Normal)
 )
 
 // Material typography
@@ -64,14 +65,14 @@ val Typography = Typography(
     body2 = TextStyle(
         fontFamily = SHABNAM_LIGHT,
         fontWeight = FontWeight.Normal,
-        fontSize = 8.sp,
+        fontSize = 14.sp,
     ),
 )
 
-//val Typography.title: TextStyle
-//    @Composable
-//    get() = TextStyle(
-//        fontFamily = FontFamily.Default,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 16.sp,
-//    )
+val Typography.publisherChips: TextStyle
+    @Composable
+    get() = TextStyle(
+        fontFamily = SHABNAM_MEDIUM,
+        fontWeight = FontWeight.Normal,
+        fontSize = 8.sp,
+    )
