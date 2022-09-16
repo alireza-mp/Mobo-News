@@ -9,6 +9,8 @@ data class HotNewsEntity(
     val category: String,
     @SerializedName("id")
     val id: Int,
+    @SerializedName("news_id")
+    val newsId: Int,
     @SerializedName("image_url")
     val imageUrl: String,
     @SerializedName("publisher")
@@ -23,10 +25,11 @@ data class HotNewsEntity(
     val title: String,
 )
 
- fun HotNewsEntity.mapToDomainModel(): HotNews {
+fun HotNewsEntity.mapToDomainModel(): HotNews {
     return HotNews(
         category = category,
         id = id,
+        newsId = newsId,
         imageUrl = imageUrl,
         publisher = publisher,
         publisherImageUrl = publisherImageUrl,

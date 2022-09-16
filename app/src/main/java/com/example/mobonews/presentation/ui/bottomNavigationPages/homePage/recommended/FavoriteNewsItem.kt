@@ -30,7 +30,7 @@ fun FavoriteNewsItem(
     Card(
         backgroundColor = MaterialTheme.colors.surface,
         modifier = modifier.fillMaxWidth()
-            .padding(start = 1.dp, end = 1.dp, bottom = 8.dp),
+            .padding(start = 1.dp, end = 1.dp, bottom = 16.dp),
         shape = MaterialTheme.shapes.large,
         onClick = { onClick(model.id) },
     ) {

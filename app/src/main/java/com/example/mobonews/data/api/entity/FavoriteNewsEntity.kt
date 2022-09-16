@@ -12,6 +12,8 @@ data class FavoriteNewsEntity(
     val description: String,
     @SerializedName("id")
     val id: Int,
+    @SerializedName("news_id")
+    val newsId: Int,
     @SerializedName("image_url")
     val imageUrl: String,
     @SerializedName("publisher")
@@ -27,6 +29,7 @@ fun FavoriteNewsEntity.mapToDomainModel(): FavoriteNews {
         category = categoryName,
         description = description,
         id = id,
+        newsId = newsId,
         imageUrl = imageUrl,
         publisher = publisher,
         publisherImageUrl = publisherImageUrl,
