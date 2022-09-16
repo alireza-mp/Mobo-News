@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.flowing.FlowIngPage
@@ -37,6 +36,7 @@ fun HomePage(
         Spacer(modifier = Modifier.padding(top = 16.dp))
         // tab row
         CustomTabRow(
+            modifier = Modifier.padding(horizontal = 16.dp),
             tabState = tabState.value,
             onTabClick = { index ->
                 coroutineScope.launch {
@@ -47,22 +47,13 @@ fun HomePage(
         Spacer(modifier = Modifier.padding(top = 12.dp))
         // pager
         HorizontalPager(
-            modifier = Modifier.fillMaxSize()
-                // remove display padding for fit lazy row width to display
-                .layout { measurable, constraints ->
-                    val placeable = measurable.measure(constraints.copy(
-                        maxWidth = constraints.maxWidth + 16.dp.roundToPx(),// remove left padding
-                    ))
-                    layout(placeable.width, placeable.height) {
-                        placeable.place(8.dp.roundToPx(), 0)
-                    }
-                },
+            modifier = Modifier.fillMaxSize(),
             count = 2,
             state = pagerState,
         ) { page ->
             when (page) {
                 0 -> {
-                    RecommendedPage()
+                    RecommendedPage(homePageNavHost)
                 }
                 1 -> {
                     FlowIngPage()

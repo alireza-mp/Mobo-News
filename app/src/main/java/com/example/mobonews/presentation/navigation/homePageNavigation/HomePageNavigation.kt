@@ -1,17 +1,23 @@
 package com.example.mobonews.presentation.navigation.homePageNavigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.home.HomePage
 import com.example.mobonews.presentation.ui.newsDetail.NewsDetail
 
 @Composable
-fun HomePageNavigation() {
+fun HomePageNavigation(
+    homePageState: MutableState<String>,
+) {
 
     val homePageNavHost = rememberNavController()
+    val navBackStackEntry by homePageNavHost.currentBackStackEntryAsState()
+    homePageState.value = navBackStackEntry?.destination?.route ?: ""
 
     NavHost(
         navController = homePageNavHost,

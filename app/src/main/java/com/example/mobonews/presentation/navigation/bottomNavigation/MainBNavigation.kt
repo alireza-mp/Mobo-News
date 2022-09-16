@@ -1,6 +1,7 @@
 package com.example.mobonews.presentation.navigation.bottomNavigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,6 +14,7 @@ import com.example.mobonews.presentation.ui.bottomNavigationPages.savePage.SaveP
 @Composable
 fun MainBottomNavigation(
     bNavigationController: NavHostController, //main page bottom navigation controller
+    homePageNavState: MutableState<String>,
 ) {
 
     NavHost(
@@ -22,7 +24,7 @@ fun MainBottomNavigation(
         composable(
             route = MainBNScreens.Home.screenRoute,
         ) {
-            HomePageNavigation()
+            HomePageNavigation(homePageNavState)
         }
         composable(MainBNScreens.Discover.screenRoute) {
             DiscoverPage(bNavigationController)

@@ -13,12 +13,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.example.mobonews.presentation.navigation.homePageNavigation.HomePageNavigationScreens
 import com.example.mobonews.presentation.ui.components.BallProgress
 import com.example.mobonews.presentation.ui.components.ErrorView
 import com.example.mobonews.util.UiState
 
 @Composable
-fun RecommendedPage() {
+fun RecommendedPage(
+    navHostController: NavHostController,
+) {
 
     val viewModel: RecommendedViewModel = hiltViewModel()
 
@@ -26,19 +30,18 @@ fun RecommendedPage() {
         UiState.Loading -> {
             // progress view
             Box(
-                modifier = Modifier.fillMaxSize().padding(end = 16.dp),
+                modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
             ) {
                 BallProgress()
             }
         }
         UiState.Success -> {
-            Content(viewModel)
+            Content(viewModel, navHostController)
         }
         UiState.Error -> {
             // error view
             ErrorView(
-                padding = PaddingValues(end = 16.dp),
                 onRetry = {
                     viewModel.initialData()
                 },
@@ -48,7 +51,7 @@ fun RecommendedPage() {
 }
 
 @Composable
-private fun Content(viewModel: RecommendedViewModel) {
+private fun Content(viewModel: RecommendedViewModel, navHostController: NavHostController) {
 
     val favoriteNewsList = remember { viewModel.favoriteNewsList }
     val hotNewsList = remember { viewModel.hotNewsList }
@@ -60,7 +63,7 @@ private fun Content(viewModel: RecommendedViewModel) {
             Spacer(modifier = Modifier.padding(top = 4.dp))
             Row(
                 modifier = Modifier.fillMaxWidth()
-                    .padding(end = 16.dp),
+                    .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -86,6 +89,7 @@ private fun Content(viewModel: RecommendedViewModel) {
             Spacer(modifier = Modifier.padding(top = 8.dp))
             LazyRow(
                 modifier = Modifier.fillMaxWidth()
+                    .padding(start = 16.dp)
             ) {
                 itemsIndexed(
                     items = hotNewsList,
@@ -93,7 +97,13 @@ private fun Content(viewModel: RecommendedViewModel) {
                 ) { _, item ->
                     HotNewsItem(
                         model = item,
-                        onClick = {}
+                        onClick = {
+                            navHostController.navigate(HomePageNavigationScreens.NewsDetail.route) {
+                                popUpTo(HomePageNavigationScreens.NewsDetail.route) {
+                                    saveState = true
+                                }
+                            }
+                        }
                     )
                 }
             }
@@ -104,7 +114,7 @@ private fun Content(viewModel: RecommendedViewModel) {
             Spacer(modifier = Modifier.padding(top = 8.dp))
             Row(
                 modifier = Modifier.fillMaxWidth()
-                    .padding(end = 16.dp),
+                    .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -129,7 +139,7 @@ private fun Content(viewModel: RecommendedViewModel) {
         // favorite news list
         itemsIndexed(items = favoriteNewsList, key = { _, item -> item.id }) { _, item ->
             FavoriteNewsItem(
-                modifier = Modifier.padding(end = 16.dp),
+                modifier = Modifier.padding(horizontal = 16.dp),
                 model = item,
                 onClick = {}
             )

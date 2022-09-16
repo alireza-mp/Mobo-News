@@ -12,42 +12,83 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mobonews.R
 import com.example.mobonews.presentation.navigation.bottomNavigation.MainBNScreens
+import com.example.mobonews.presentation.navigation.homePageNavigation.HomePageNavigationScreens
 
 
 @Composable
 fun TopAppBar(
-    navController: NavHostController,
+    bottomNavController: NavHostController,
+    homePageNavState: String,
 ) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
 
+    when (navBackStackEntry?.destination?.route ?: "") {
+        MainBNScreens.Home.screenRoute -> {
+            HomePageAppBar(homePageNavState)
+        }
+        MainBNScreens.Discover.screenRoute -> {
+            DiscoverPageAppBar()
+        }
+        else -> {
+            DiscoverPageAppBar()
+        }
+    }
+}
+
+@Composable
+private fun HomePageAppBar(homePageNavState: String) {
+    // if current route is home page visible app bar
+    when (homePageNavState) {
+        HomePageNavigationScreens.Home.route -> {
+            HomeAppBarContent()
+        }
+        else -> {
+
+        }
+    }
+
+}
+
+@Composable
+private fun HomeAppBarContent() {
     Box(
         modifier = Modifier.fillMaxWidth().height(50.dp).padding(horizontal = 16.dp),
     ) {
-        when (navBackStackEntry?.destination?.route ?: "") {
-            MainBNScreens.Home.screenRoute -> {
-                CustomIconButton(
-                    modifier = Modifier.align(Alignment.CenterEnd),
-                    id = R.drawable.ic_notifications,
-                    onClick = {},
-                )
-            }
-            MainBNScreens.Discover.screenRoute -> {
-                Row(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End,
-                ) {
-                    CustomIconButton(
-                        id = R.drawable.ic_filter,
-                        onClick = {}
-                    )
-                    Spacer(modifier = Modifier.padding(end = 20.dp))
-                    CustomIconButton(
-                        id = R.drawable.ic_search,
-                        onClick = {}
-                    )
-                }
-            }
+
+
+        CustomIconButton(
+            modifier = Modifier.align(Alignment.CenterEnd),
+            id = R.drawable.ic_notifications,
+            onClick = {},
+        )
+        Image(
+            modifier = Modifier.height(40.dp)
+                .align(Alignment.Center),
+            painter = painterResource(R.drawable.logo),
+            contentDescription = null,
+        )
+    }
+}
+
+@Composable
+private fun DiscoverPageAppBar() {
+    Box(
+        modifier = Modifier.fillMaxWidth().height(50.dp).padding(horizontal = 16.dp),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End,
+        ) {
+            CustomIconButton(
+                id = R.drawable.ic_filter,
+                onClick = {}
+            )
+            Spacer(modifier = Modifier.padding(end = 20.dp))
+            CustomIconButton(
+                id = R.drawable.ic_search,
+                onClick = {}
+            )
         }
         Image(
             modifier = Modifier.height(40.dp)

@@ -19,11 +19,12 @@ import com.example.mobonews.presentation.theme.White
 
 @Composable
 fun CustomTabRow(
+    modifier: Modifier = Modifier,
     tabState: TabState,
     onTabClick: (index: Int) -> Unit,
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(50.dp),
         backgroundColor = MaterialTheme.colors.surface,
