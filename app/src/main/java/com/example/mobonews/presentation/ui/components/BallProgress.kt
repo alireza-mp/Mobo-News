@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.dp
 import com.ehsanmsz.mszprogressindicator.progressindicator.BallPulseProgressIndicator
 
 @Composable
-fun BallProgress(modifier: Modifier) {
+fun BallProgress(modifier: Modifier = Modifier) {
 
     BallPulseProgressIndicator(
         modifier = modifier,

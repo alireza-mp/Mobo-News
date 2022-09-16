@@ -12,7 +12,7 @@ import com.example.mobonews.R
 private val SHABNAM_BOLD = FontFamily(
     Font(R.font.shabnam_bold, FontWeight.Normal)
 )
-private val SHABNAM_MEDIUM = FontFamily(
+ val SHABNAM_MEDIUM = FontFamily(
     Font(R.font.shabnam_medium, FontWeight.Normal)
 )
 private val SHABNAM_LIGHT = FontFamily(
