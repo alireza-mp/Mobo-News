@@ -19,8 +19,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mobonews.R
 import com.example.mobonews.domain.model.HotNews
-import com.example.mobonews.presentation.ui.components.Chips
-import com.example.mobonews.presentation.ui.components.CustomIconButton
 
 
 @OptIn(ExperimentalMaterialApi::class)

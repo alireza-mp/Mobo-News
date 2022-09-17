@@ -1,5 +1,6 @@
 package com.example.mobonews.presentation.ui.components
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -12,6 +13,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.example.mobonews.presentation.theme.White
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Chips(
     modifier: Modifier = Modifier,
@@ -19,14 +21,18 @@ fun Chips(
     textColor: Color = MaterialTheme.colors.White,
     textStyle: TextStyle = MaterialTheme.typography.h4,
     backgroundColor: Color = MaterialTheme.colors.primary.copy(0.5f),
+    innerPadding: PaddingValues = PaddingValues(vertical = 8.dp, horizontal = 12.dp),
+    onClick: (() -> Unit)? = null,
 ) {
     Card(
         modifier = modifier,
         backgroundColor = backgroundColor,
         shape = MaterialTheme.shapes.medium,
+        enabled = onClick != null,
+        onClick = { onClick?.invoke() },
     ) {
         Text(
-            modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp),
+            modifier = Modifier.padding(innerPadding),
             text = title,
             color = textColor,
             style = textStyle,

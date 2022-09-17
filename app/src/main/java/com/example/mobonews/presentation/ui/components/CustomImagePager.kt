@@ -38,7 +38,7 @@ fun CustomImagePager(
             AsyncImage(
                 modifier = Modifier.fillMaxSize()
                     .padding(padding)
-                    .clip(MaterialTheme.shapes.large),
+                    .clip(MaterialTheme.shapes.medium),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(imagesUrl[page])
                     .crossfade(true)
