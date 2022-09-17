@@ -1,4 +1,4 @@
-package com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.recommended
+package com.example.mobonews.presentation.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
