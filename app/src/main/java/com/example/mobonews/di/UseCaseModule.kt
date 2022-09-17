@@ -1,6 +1,8 @@
 package com.example.mobonews.di
 
+import com.example.mobonews.domain.repository.NewsDetailRepository
 import com.example.mobonews.domain.repository.NewsRepository
+import com.example.mobonews.domain.useCase.GetNewsDetailUseCase
 import com.example.mobonews.domain.useCase.GetRecommendedUseCase
 import dagger.Module
 import dagger.Provides
@@ -16,6 +18,13 @@ object UseCaseModule {
         newsRepository: NewsRepository,
     ): GetRecommendedUseCase {
         return GetRecommendedUseCase(newsRepository)
+    }
+
+    @Provides
+    fun provideGetNewsDetailUseCase(
+        newsDetailRepository: NewsDetailRepository,
+    ): GetNewsDetailUseCase {
+        return GetNewsDetailUseCase(newsDetailRepository)
     }
 
 }

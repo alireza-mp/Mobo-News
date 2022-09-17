@@ -98,11 +98,11 @@ private fun Content(viewModel: RecommendedViewModel, navHostController: NavHostC
                     HotNewsItem(
                         model = item,
                         onClick = {
-                            navHostController.navigate(HomePageNavigationScreens.NewsDetail.route) {
-                                popUpTo(HomePageNavigationScreens.NewsDetail.route) {
-                                    saveState = true
-                                }
-                            }
+                            navHostController.navigate(
+                                HomePageNavigationScreens.NewsDetail.createNewsIdRoute(
+                                    newsId = item.newsId.toString(),
+                                ),
+                            )
                         }
                     )
                 }
@@ -141,7 +141,13 @@ private fun Content(viewModel: RecommendedViewModel, navHostController: NavHostC
             FavoriteNewsItem(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 model = item,
-                onClick = {}
+                onClick = {
+                    navHostController.navigate(
+                        HomePageNavigationScreens.NewsDetail.createNewsIdRoute(
+                            newsId = item.newsId.toString(),
+                        ),
+                    )
+                }
             )
         }
     }

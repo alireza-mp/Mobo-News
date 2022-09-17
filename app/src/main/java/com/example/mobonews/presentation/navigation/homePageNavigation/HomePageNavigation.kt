@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.home.HomePage
-import com.example.mobonews.presentation.ui.newsDetail.NewsDetail
+import com.example.mobonews.presentation.ui.newsDetail.NewsDetailPage
 
 @Composable
 fun HomePageNavigation(
@@ -26,8 +26,9 @@ fun HomePageNavigation(
         composable(route = HomePageNavigationScreens.Home.route) {
             HomePage(homePageNavHost)
         }
-        composable(route = HomePageNavigationScreens.NewsDetail.route) {
-            NewsDetail()
+        composable(route = HomePageNavigationScreens.NewsDetail.route) { backStackEntry ->
+            val newsId = backStackEntry.arguments?.getString("newsId") ?: "0"
+            NewsDetailPage(newsId = newsId)
         }
     }
 
