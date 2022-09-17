@@ -31,7 +31,7 @@ fun MainPage() {
         topBar = {
             TopAppBar(
                 bottomNavController = bNavigationController,
-                homePageNavState = homePageNavState.value,
+                homePageNavState = homePageNavState,
             )
         },
         bottomBar = { BottomNavigation(navController = bNavigationController) }

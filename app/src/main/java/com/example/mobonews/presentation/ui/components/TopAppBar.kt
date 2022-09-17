@@ -1,8 +1,10 @@
 package com.example.mobonews.presentation.ui.components
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +20,7 @@ import com.example.mobonews.presentation.navigation.homePageNavigation.HomePageN
 @Composable
 fun TopAppBar(
     bottomNavController: NavHostController,
-    homePageNavState: String,
+    homePageNavState: MutableState<String>,
 ) {
     val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
 
@@ -36,15 +38,14 @@ fun TopAppBar(
 }
 
 @Composable
-private fun HomePageAppBar(homePageNavState: String) {
+private fun HomePageAppBar(homePageNavState: MutableState<String>) {
     // if current route is home page visible app bar
-    when (homePageNavState) {
-        HomePageNavigationScreens.Home.route -> {
-            HomeAppBarContent()
-        }
-        else -> {
-
-        }
+    AnimatedVisibility(
+        visible = homePageNavState.value == HomePageNavigationScreens.Home.route,
+        enter = fadeIn() + slideInVertically(),
+        exit = fadeOut() + slideOutVertically()
+    ) {
+        HomeAppBarContent()
     }
 
 }
