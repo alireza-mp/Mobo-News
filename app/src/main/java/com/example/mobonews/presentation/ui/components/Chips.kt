@@ -2,6 +2,7 @@ package com.example.mobonews.presentation.ui.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +30,32 @@ fun Chips(
             text = title,
             color = textColor,
             style = textStyle,
+        )
+    }
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun Chips(
+    modifier: Modifier = Modifier,
+    title: String,
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
+    Card(
+        modifier = modifier,
+        backgroundColor = if (enabled)
+            MaterialTheme.colors.onPrimary else MaterialTheme.colors.White,
+        shape = MaterialTheme.shapes.medium,
+        enabled = !enabled, // disable enabled item onClick
+        onClick = onClick,
+    ) {
+        Text(
+            modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp),
+            text = title,
+            color = if (enabled) MaterialTheme.colors.primary else MaterialTheme.colors.secondary,
+            style = MaterialTheme.typography.h4,
         )
     }
 }
