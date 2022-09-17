@@ -67,6 +67,7 @@ private fun Content(viewModel: NewsDetailViewModel) {
 
     Box(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colors.background)) {
 
+
         Image(
             modifier = Modifier.fillMaxWidth().height(300.dp)
                 .alphaAnimation(delay = 500, 800),
@@ -75,9 +76,22 @@ private fun Content(viewModel: NewsDetailViewModel) {
             contentScale = ContentScale.FillBounds
         )
 
+        Row(modifier = Modifier.fillMaxWidth().padding(end = 16.dp, start = 16.dp, top = 16.dp)) {
+            CustomIconButton(id = R.drawable.ic_arrow_right, onClick = {
+
+            })
+            Spacer(modifier = Modifier.weight(1f))
+            CustomIconButton(id = R.drawable.ic_bookmark, onClick = {
+
+            })
+            Spacer(modifier = Modifier.padding(end = 16.dp))
+            CustomIconButton(id = R.drawable.ic_vertical_menu, onClick = {
+
+            })
+        }
+
         Column(
-            modifier = Modifier.fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
         ) {
             Spacer(modifier = Modifier.padding(top = 270.dp))
             Card(
