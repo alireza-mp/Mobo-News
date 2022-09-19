@@ -24,13 +24,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.mobonews.presentation.navigation.bottomNavigation.MainBNScreens
+import com.example.mobonews.presentation.navigation.bottomNavigation.BottomNavigationScreens
+import com.example.mobonews.presentation.navigation.bottomNavigation.BottomNavigationTabs
 import com.example.mobonews.presentation.theme.bottomNavigationSelector
 
 
 @Composable
 fun BottomNavigation(
-    navController: NavHostController,
+    bottomNavController: NavHostController,
 ) {
     BoxWithConstraints {
         val numberOfTabs = 5
@@ -43,14 +44,14 @@ fun BottomNavigation(
             tabsPoint.add(firstPoint + (spaceBetweenTabs * tabNumber))
         }
         val items = listOf(
-            MainBNScreens.Home,
-            MainBNScreens.Discover,
-            MainBNScreens.AddNew,
-            MainBNScreens.Save,
-            MainBNScreens.Profile,
+            BottomNavigationTabs.Home,
+            BottomNavigationTabs.Discover,
+            BottomNavigationTabs.AddNew,
+            BottomNavigationTabs.Save,
+            BottomNavigationTabs.Profile,
         )
         Content(
-            navController,
+            bottomNavController,
             tabsPoint,
             items,
             selectorHeight,
@@ -64,7 +65,7 @@ fun BottomNavigation(
 private fun Content(
     navController: NavHostController,
     tabsPoint: List<Float>,
-    items: List<MainBNScreens>,
+    items: List<BottomNavigationTabs>,
     selectorHeight: Int,
     selectorWidth: Int,
 ) {
@@ -76,29 +77,36 @@ private fun Content(
         modifier = Modifier.fillMaxWidth(),
         backgroundColor = MaterialTheme.colors.surface
     ) {
-        for (index in items.indices) {
+        items.forEachIndexed { index, item ->
             BottomNavigationItem(
                 icon = {
-                    if (currentRoute == items[index].screenRoute) {
-                        Image(painterResource(id = items[index].enabledIcon),
+                    if (
+                        currentRoute == item.screenRoute ||
+                        // enable home icon from news detail page
+                        (currentRoute == BottomNavigationScreens.NewsDetail.route && index == 0)
+                    ) {
+                        Image(painterResource(id = item.enabledIcon),
                             contentDescription = null)
                     } else {
-                        Icon(painterResource(id = items[index].icon),
+                        Icon(painterResource(id = item.icon),
                             contentDescription = null)
                     }
                 },
                 selectedContentColor = MaterialTheme.colors.primary,
                 unselectedContentColor = MaterialTheme.colors.secondary,
-                selected = currentRoute == items[index].screenRoute,
+                selected = currentRoute == item.screenRoute,
                 onClick = {
+
                     selectorXPointState.value = tabsPoint[index].dp
+
                     navController.navigate(items[index].screenRoute) {
-                        navController.currentDestination?.route?.let { screen_route ->
-                            popUpTo(screen_route) {
-                                inclusive = true // remove last page form back stack
-                                saveState = true
-                            }
+
+                        popUpTo(currentRoute ?: "") {
+                            saveState = true
+                            inclusive = true
+
                         }
+
                         launchSingleTop = true
                         restoreState = true
                     }
@@ -129,7 +137,6 @@ private fun SelectorUI(
             easing = LinearEasing
         )
     )
-
     // selector
     Card(
         modifier = Modifier.size(width = selectorWidth.dp, height = selectorHeight.dp)

@@ -4,7 +4,6 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,50 +12,48 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mobonews.R
-import com.example.mobonews.presentation.navigation.bottomNavigation.MainBNScreens
-import com.example.mobonews.presentation.navigation.homePageNavigation.HomePageNavigationScreens
+import com.example.mobonews.presentation.navigation.bottomNavigation.BottomNavigationScreens
 
 
 @Composable
 fun TopAppBar(
     bottomNavController: NavHostController,
-    homePageNavState: MutableState<String>,
 ) {
+
     val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
-    when (navBackStackEntry?.destination?.route ?: "") {
-        MainBNScreens.Home.screenRoute -> {
-            HomePageAppBar(homePageNavState)
-        }
-        MainBNScreens.Discover.screenRoute -> {
-            DiscoverPageAppBar()
-        }
-        else -> {
-            DiscoverPageAppBar()
-        }
-    }
-}
-
-@Composable
-private fun HomePageAppBar(homePageNavState: MutableState<String>) {
-    // if current route is home page visible app bar
     AnimatedVisibility(
-        visible = homePageNavState.value == HomePageNavigationScreens.Home.route,
+        visible = currentRoute != BottomNavigationScreens.NewsDetail.route, // gone appBar from news detail page
         enter = fadeIn() + slideInVertically(),
         exit = fadeOut() + slideOutVertically()
     ) {
-        HomeAppBarContent()
+        AppBarContent(currentRoute)
+    }
+}
+
+
+@Composable
+private fun AppBarContent(currentRoute: String?) {
+    when (currentRoute ?: "") {
+        BottomNavigationScreens.Home.route -> {
+            HomePageAppBar()
+        }
+        BottomNavigationScreens.Discover.route -> {
+            DiscoverPageAppBar()
+        }
+        else -> {
+            /* addNew & profile & save app bar */
+        }
     }
 
 }
 
 @Composable
-private fun HomeAppBarContent() {
+private fun HomePageAppBar() {
     Box(
         modifier = Modifier.fillMaxWidth().height(50.dp).padding(horizontal = 16.dp),
     ) {
-
-
         CustomIconButton(
             modifier = Modifier.align(Alignment.CenterEnd),
             id = R.drawable.ic_notifications,

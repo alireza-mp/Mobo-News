@@ -1,5 +1,6 @@
 package com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +24,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomePage(
-    homePageNavHost: NavHostController,
+    navHostController: NavHostController,
 ) {
     val tabState = remember { mutableStateOf(TabState.Recommended) }
     val pagerState = rememberPagerState()
@@ -53,14 +54,13 @@ fun HomePage(
         ) { page ->
             when (page) {
                 0 -> {
-                    RecommendedPage(homePageNavHost)
+                    RecommendedPage(navHostController)
                 }
                 1 -> {
                     FlowIngPage()
                 }
             }
         }
-
         // update tabRow state when page scrolled
         LaunchedEffect(pagerState.currentPage) {
             if (pagerState.currentPage == 0) {

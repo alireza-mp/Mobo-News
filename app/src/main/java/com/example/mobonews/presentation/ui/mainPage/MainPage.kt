@@ -7,13 +7,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.mobonews.presentation.navigation.bottomNavigation.MainBottomNavigation
-import com.example.mobonews.presentation.navigation.homePageNavigation.HomePageNavigationScreens
 import com.example.mobonews.presentation.ui.components.BottomNavigation
 import com.example.mobonews.presentation.ui.components.TopAppBar
 
@@ -21,20 +18,17 @@ import com.example.mobonews.presentation.ui.components.TopAppBar
 fun MainPage() {
 
     // bottom navigation controller
-    val bNavigationController = rememberNavController()
-    // home page navigation controller
-    val homePageNavState = remember { mutableStateOf(HomePageNavigationScreens.Home.route) }
+    val bottomNavController = rememberNavController()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         backgroundColor = MaterialTheme.colors.background,
         topBar = {
             TopAppBar(
-                bottomNavController = bNavigationController,
-                homePageNavState = homePageNavState,
+                bottomNavController = bottomNavController,
             )
         },
-        bottomBar = { BottomNavigation(navController = bNavigationController) }
+        bottomBar = { BottomNavigation(bottomNavController = bottomNavController) }
     ) {
         Surface(
             modifier = Modifier.padding(it),
@@ -45,8 +39,7 @@ fun MainPage() {
                 contentAlignment = Alignment.Center,
             ) {
                 MainBottomNavigation(
-                    bNavigationController = bNavigationController,
-                    homePageNavState = homePageNavState
+                    bottomNavController = bottomNavController,
                 )
             }
         }
