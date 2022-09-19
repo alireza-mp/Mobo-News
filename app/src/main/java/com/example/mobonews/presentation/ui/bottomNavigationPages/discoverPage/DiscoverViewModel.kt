@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mobonews.domain.model.DiscoverDetail
 import com.example.mobonews.domain.model.HotNews
 import com.example.mobonews.domain.model.Publisher
 import com.example.mobonews.domain.useCase.GetDiscoverDetailUseCase
@@ -40,6 +41,9 @@ constructor(
     var selectedCategory by mutableStateOf(Categories.All)
         private set
 
+    private var details: DiscoverDetail? = null
+
+
     init {
         initialData()
     }
@@ -52,8 +56,8 @@ constructor(
                         uiState = UiState.Loading
                     }
                     is DataState.Success -> {
-                        _newsList.addAll(it.data.newsList)
-                        _publishersList.addAll(it.data.publishers)
+                        details = it.data
+                        filterList(details)
                         _bannerUrls.addAll(it.data.bannerUrls)
                         subtitle = it.data.subtitle
                         uiState = UiState.Success
@@ -68,6 +72,23 @@ constructor(
 
     fun onCategoryClick(item: Categories) {
         selectedCategory = item
+        filterList(details)
+    }
+
+    private fun filterList(detail: DiscoverDetail?) {
+        detail?.let {
+            // clear lists items
+            _newsList.clear()
+            _publishersList.clear()
+            // filter list by category
+            if (selectedCategory != Categories.All) {
+                _newsList.addAll(detail.newsList.filter { item -> item.category == selectedCategory.title })
+                _publishersList.addAll(detail.publishers.filter { item -> item.category == selectedCategory.title })
+            } else {
+                _newsList.addAll(detail.newsList)
+                _publishersList.addAll(detail.publishers)
+            }
+        }
     }
 
 }

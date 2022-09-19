@@ -24,12 +24,13 @@ import com.example.mobonews.domain.model.HotNews
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HotNewsItem(
+    modifier :Modifier = Modifier,
     model: HotNews,
     onClick: (Int) -> Unit,
 ) {
     Card(
         backgroundColor = MaterialTheme.colors.surface,
-        modifier = Modifier.width(300.dp)
+        modifier = modifier.width(300.dp)
             .padding(end = 16.dp, start = 1.dp),
         shape = MaterialTheme.shapes.large,
         onClick = { onClick(model.id) }

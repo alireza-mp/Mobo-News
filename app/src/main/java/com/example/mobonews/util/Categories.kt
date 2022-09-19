@@ -2,7 +2,7 @@ package com.example.mobonews.util
 
 enum class Categories(val title: String) {
     All("همه"),
-    World("جهان"),
+    Technology("تکنولوژی"),
     Sport("ورزشی"),
     Science("علم و دانش"),
     Political("سیاسی"),
@@ -14,7 +14,7 @@ enum class Categories(val title: String) {
         fun getCategoriesAsList(): List<Categories> {
             return listOf(
                 All,
-                World,
+                Technology,
                 Sport,
                 Science,
                 Political,

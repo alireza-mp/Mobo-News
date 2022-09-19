@@ -1,5 +1,6 @@
 package com.example.mobonews.presentation.ui.bottomNavigationPages.discoverPage
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -112,6 +113,7 @@ private fun Content(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PublishersList(viewModel: DiscoverViewModel) {
     LazyRow(modifier = Modifier.fillMaxWidth().padding(start = 16.dp)) {
@@ -120,7 +122,8 @@ fun PublishersList(viewModel: DiscoverViewModel) {
             key = { _, item -> item.id },
         ) { _, item ->
             PublisherItem(
-                modifier = Modifier.padding(end = 16.dp),
+                modifier = Modifier.padding(end = 16.dp)
+                    .animateItemPlacement(),
                 model = item,
                 onClick = {
 
@@ -129,6 +132,7 @@ fun PublishersList(viewModel: DiscoverViewModel) {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NewsList(viewModel: DiscoverViewModel) {
     LazyRow(modifier = Modifier.fillMaxWidth().padding(start = 16.dp)) {
@@ -137,6 +141,7 @@ fun NewsList(viewModel: DiscoverViewModel) {
             key = { _, item -> item.id },
         ) { _, item ->
             HotNewsItem(
+                modifier = Modifier.animateItemPlacement(),
                 model = item,
                 onClick = {}
             )
