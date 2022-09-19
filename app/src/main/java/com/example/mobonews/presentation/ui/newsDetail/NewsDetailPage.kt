@@ -33,15 +33,9 @@ fun NewsDetailPage(
 ) {
     val viewModel: NewsDetailViewModel = hiltViewModel()
 
-    when (viewModel.uiState.value) {
+    when (viewModel.uiState) {
         UiState.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize()
-                    .background(color = MaterialTheme.colors.background),
-                contentAlignment = Alignment.Center,
-            ) {
-                BallProgress()
-            }
+            BallProgressView()
         }
         UiState.Success -> {
             Content(viewModel)

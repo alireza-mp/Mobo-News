@@ -5,10 +5,8 @@ import com.example.mobonews.data.repository.dataSource.NewsRemoteDataSource
 import com.example.mobonews.domain.model.NewsDetail
 import com.example.mobonews.domain.repository.NewsDetailRepository
 import com.example.mobonews.util.DataState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -18,17 +16,14 @@ constructor(
     private val newsRemoteDataSource: NewsRemoteDataSource,
 ) : NewsDetailRepository {
 
-    override suspend fun getNewsDetail(newsId: Int): Flow<DataState<NewsDetail>> =
-        withContext(Dispatchers.IO) {
-            flow {
-                emit(DataState.Loading)
-                val result = newsRemoteDataSource.getNewsDetail(newsId)
-                result ?: emit(DataState.Error)
-                result?.let {
-                    if (result.isSuccessful && result.body() != null) {
-                        emit(DataState.Success(result.body()!!.mapToDomainModel()))
-                    } else emit(DataState.Error)
-                }
-            }
+    override suspend fun getNewsDetail(newsId: Int): Flow<DataState<NewsDetail>> = flow {
+        emit(DataState.Loading)
+        val result = newsRemoteDataSource.getNewsDetail(newsId)
+        result ?: emit(DataState.Error)
+        result?.let {
+            if (result.isSuccessful && result.body() != null) {
+                emit(DataState.Success(result.body()!!.mapToDomainModel()))
+            } else emit(DataState.Error)
         }
+    }
 }
