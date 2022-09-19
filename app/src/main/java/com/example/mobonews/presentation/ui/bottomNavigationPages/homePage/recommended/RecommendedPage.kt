@@ -1,17 +1,15 @@
 package com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.recommended
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.mobonews.presentation.navigation.homePageNavigation.HomePageNavigationScreens
+import com.example.mobonews.presentation.navigation.bottomNavigation.BottomNavigationScreens
 import com.example.mobonews.presentation.ui.components.*
 import com.example.mobonews.util.UiState
 
@@ -21,16 +19,10 @@ fun RecommendedPage(
 ) {
 
     val viewModel: RecommendedViewModel = hiltViewModel()
-
-    when (viewModel.uiState.value) {
+    when (viewModel.uiState) {
         UiState.Loading -> {
             // progress view
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                BallProgress()
-            }
+            BallProgressView()
         }
         UiState.Success -> {
             Content(viewModel, navHostController)
@@ -49,65 +41,76 @@ fun RecommendedPage(
 @Composable
 private fun Content(viewModel: RecommendedViewModel, navHostController: NavHostController) {
 
-    val favoriteNewsList = remember { viewModel.favoriteNewsList }
-    val hotNewsList = remember { viewModel.hotNewsList }
-
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
 
         // hot news title
-        item {
-            Spacer(modifier = Modifier.padding(top = 4.dp))
-            ListTitle(
-                padding = PaddingValues(horizontal = 16.dp),
-                title = "خبر های داغ",
-                onClick = {},
-            )
-        }
+
+        Spacer(modifier = Modifier.padding(top = 4.dp))
+        ListTitle(
+            padding = PaddingValues(horizontal = 16.dp),
+            title = "خبر های داغ",
+            onClick = {},
+        )
+
 
         // hot news list
-        item {
-            Spacer(modifier = Modifier.padding(top = 8.dp))
-            LazyRow(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start = 16.dp)
-            ) {
-                itemsIndexed(
-                    items = hotNewsList,
-                    key = { _, item -> item.id },
-                ) { _, item ->
-                    HotNewsItem(
-                        model = item,
-                        onClick = {
-                            navHostController.navigate(
-                                HomePageNavigationScreens.NewsDetail.createNewsIdRoute(
-                                    newsId = item.newsId.toString(),
-                                ),
-                            )
-                        }
-                    )
-                }
-            }
-        }
+
+        Spacer(modifier = Modifier.padding(top = 8.dp))
+        HotNewsList(viewModel, navHostController)
+
 
         // favorite news title
-        item {
-            Spacer(modifier = Modifier.padding(top = 8.dp))
-            ListTitle(
-                padding = PaddingValues(horizontal = 16.dp),
-                title = "خبر هایی که علاقه داری",
-                onClick = {},
-            )
-            Spacer(modifier = Modifier.padding(top = 8.dp))
-        }
+
+        Spacer(modifier = Modifier.padding(top = 8.dp))
+        ListTitle(
+            padding = PaddingValues(horizontal = 16.dp),
+            title = "خبر هایی که علاقه داری",
+            onClick = {},
+        )
+        Spacer(modifier = Modifier.padding(top = 8.dp))
+
 
         // favorite news list
-        itemsIndexed(items = favoriteNewsList, key = { _, item -> item.id }) { _, item ->
-            FavoriteNewsItem(
-                modifier = Modifier.padding(horizontal = 16.dp),
+        FavoriteNewsList(viewModel, navHostController)
+
+    }
+}
+
+@Composable
+private fun FavoriteNewsList(
+    viewModel: RecommendedViewModel,
+    navHostController: NavHostController,
+) {
+    viewModel.favoriteNewsList.forEachIndexed { _, item ->
+        FavoriteNewsItem(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            model = item,
+            onClick = {
+                // navigate to news detail page
+                navHostController.navigate(
+                    BottomNavigationScreens.NewsDetail.createNewsIdRoute(
+                        newsId = item.newsId.toString(),
+                    ),
+                )
+            }
+        )
+    }
+}
+
+@Composable
+private fun HotNewsList(viewModel: RecommendedViewModel, navHostController: NavHostController) {
+    Row(
+        modifier = Modifier.fillMaxWidth()
+            .padding(start = 16.dp)
+            .horizontalScroll(rememberScrollState())
+    ) {
+        viewModel.hotNewsList.forEachIndexed { _, item ->
+            HotNewsItem(
                 model = item,
                 onClick = {
+                    // navigate to news detail page
                     navHostController.navigate(
-                        HomePageNavigationScreens.NewsDetail.createNewsIdRoute(
+                        BottomNavigationScreens.NewsDetail.createNewsIdRoute(
                             newsId = item.newsId.toString(),
                         ),
                     )
