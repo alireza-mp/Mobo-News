@@ -15,7 +15,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.mobonews.presentation.navigation.bottomNavigation.MainBNScreens
+import com.example.mobonews.presentation.navigation.bottomNavigation.BottomNavigationTabs
 
 @Composable
 fun AutoSubtitel(
@@ -30,7 +30,7 @@ fun AutoSubtitel(
     AnimatedVisibility(
         modifier = modifier,
         visible = (backStackEntry.value?.destination?.route ?: "") ==
-                MainBNScreens.Discover.screenRoute,
+                BottomNavigationTabs.Discover.screenRoute,
         enter = fadeIn() + slideInVertically(initialOffsetY = { it / 2 }), //from bottom to top
         exit = fadeOut() + slideOutVertically(targetOffsetY = { it / 2 }), // from top to bottom
     ) {

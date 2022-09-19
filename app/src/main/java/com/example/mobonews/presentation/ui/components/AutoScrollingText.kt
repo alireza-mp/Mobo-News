@@ -1,4 +1,3 @@
-import android.util.Log
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.horizontalScroll
@@ -22,12 +21,13 @@ fun AutoScroollingText(
     var shouldAnimate by remember {
         mutableStateOf(true)
     }
-    LaunchedEffect(key1 = shouldAnimate) {
-        Log.i("scroll", "textext: ${text.length}")
+    val duration = text.length * 86
+    LaunchedEffect(shouldAnimate) {
         scrollState.animateScrollTo(
             scrollState.maxValue,
-            animationSpec = tween((text.length * 76),
-                200,
+            animationSpec = tween(
+                durationMillis = duration,
+                delayMillis = 0,
                 easing = CubicBezierEasing(0f, 0f, 0f, 0f))
         )
         scrollState.scrollTo(0)
