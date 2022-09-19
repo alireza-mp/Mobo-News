@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.ehsanmsz.mszprogressindicator.progressindicator.BallPulseProgressIndicator
 import com.example.mobonews.R
 import com.example.mobonews.presentation.navigation.baseNavigation.Screens
-import com.example.mobonews.presentation.ui.components.BallProgress
 import kotlinx.coroutines.delay
 
 @Composable
@@ -30,16 +30,20 @@ fun SplashPage(navController: NavController) {
             contentDescription = null
         )
 
-        BallProgress(
+        BallPulseProgressIndicator(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 36.dp),
+            color = MaterialTheme.colors.primary,
+            ballCount = 4,
+            spacing = 6.dp
         )
+
     }
 
     LaunchedEffect(Unit) {
         delay(1000)
-        navController.navigate(Screens.MainPage.route){
+        navController.navigate(Screens.MainPage.route) {
             popUpTo(Screens.SplashPage.route) {
                 inclusive = true
             }
