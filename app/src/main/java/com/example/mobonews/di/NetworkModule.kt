@@ -1,5 +1,6 @@
 package com.example.mobonews.di
 
+import com.example.mobonews.data.api.DiscoverApi
 import com.example.mobonews.data.api.NewsApi
 import com.example.mobonews.util.Constans
 import dagger.Module
@@ -46,6 +47,12 @@ object NetworkModule {
     @Singleton
     fun provideNewsApi(retrofit: Retrofit): NewsApi {
         return retrofit.create(NewsApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDiscoverApi(retrofit: Retrofit): DiscoverApi {
+        return retrofit.create(DiscoverApi::class.java)
     }
 
 

@@ -8,27 +8,42 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.mobonews.domain.model.HotNews
 import com.example.mobonews.presentation.theme.White
 import com.example.mobonews.presentation.ui.components.*
 import com.example.mobonews.util.Categories
+import com.example.mobonews.util.UiState
 
 @Composable
 fun DiscoverPage(
     navHostController: NavHostController,
 ) {
-    Content(navHostController)
+    val viewModel: DiscoverViewModel = hiltViewModel()
+    when (viewModel.uiState) {
+        UiState.Loading -> {
+            BallProgressView()
+        }
+        UiState.Success -> {
+            Content(navHostController, viewModel)
+        }
+        UiState.Error -> {
+            ErrorView {
+                viewModel.initialData()
+            }
+        }
+    }
 }
 
 @Composable
-private fun Content(navHostController: NavHostController) {
-    val selectedCategory = remember { mutableStateOf(Categories.All) }
+private fun Content(
+    navHostController: NavHostController,
+    viewModel: DiscoverViewModel,
+) {
+
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -40,29 +55,21 @@ private fun Content(navHostController: NavHostController) {
             Spacer(modifier = Modifier.padding(top = 16.dp))
             CustomImagePager(
                 padding = PaddingValues(horizontal = 16.dp),
-                imagesUrl = listOf(
-                    "https://digimoplus.ir/mobonews/banner_1.jpg",
-                    "https://digimoplus.ir/mobonews/banner_2.jpg",
-                    "https://digimoplus.ir/mobonews/banner_1.jpg",
-                    "https://digimoplus.ir/mobonews/banner_2.jpg",
-                    "https://digimoplus.ir/mobonews/banner_1.jpg",
-                    "https://digimoplus.ir/mobonews/banner_2.jpg",
-                )
+                imagesUrl = viewModel.bannerUrls
             )
 
             Spacer(modifier = Modifier.padding(top = 16.dp))
             LazyRow(modifier = Modifier.fillMaxWidth().padding(start = 16.dp)) {
                 itemsIndexed(
                     items = Categories.getCategoriesAsList(),
-                    key = { index, item -> item },
-                ) { index, item ->
+                    key = { _, item -> item.title },
+                ) { _, item ->
+
                     Chips(
                         modifier = Modifier.padding(end = 12.dp),
                         title = item.title,
-                        enabled = selectedCategory.value.title == item.title,
-                        onClick = {
-                            selectedCategory.value = item
-                        }
+                        enabled = viewModel.selectedCategory.title == item.title,
+                        onClick = { viewModel.onCategoryClick(item) }
                     )
                 }
             }
@@ -78,15 +85,7 @@ private fun Content(navHostController: NavHostController) {
 
 
             // publishers list
-            LazyRow(modifier = Modifier.fillMaxWidth().padding(start = 16.dp)) {
-                items(count = 10) {
-                    PublisherItem(
-                        modifier = Modifier.padding(end = 16.dp)
-                    ) {
-
-                    }
-                }
-            }
+            PublishersList(viewModel)
 
 
             // secretary's proposal list title
@@ -98,35 +97,49 @@ private fun Content(navHostController: NavHostController) {
             )
             Spacer(modifier = Modifier.padding(top = 8.dp))
 
+            NewsList(viewModel)
 
-            LazyRow(modifier = Modifier.fillMaxWidth().padding(start = 16.dp)) {
-                items(
-                    count = 6,
-                ) { index ->
-                    HotNewsItem(
-                        HotNews(
-                            "علمی پزشکی",
-                            id = 2,
-                            newsId = 2,
-                            imageUrl = "",
-                            publisher = "خبر گذاری اخرین خبر",
-                            publisherImageUrl = "",
-                            recommended = "پیشنهاد موبو نیوز",
-                            title = "پــاسـخ منـفـی پــورتـــو بـه چلـسـی بـرای جذب  طارمی با طعم تهدید!",
-                            time = "5 دقیقه پیش",
-                        ),
-                        onClick = {}
-                    )
-                }
-            }
             Spacer(modifier = Modifier.padding(bottom = 62.dp))
         }
+
         AutoSubtitel(
             modifier = Modifier.align(Alignment.BottomCenter),
             navController = navHostController,
-            text = "بی نظمی شدید در مراسم رونمایی از کاپ جام جهانی و قهر نماینده فیفا  # برانکو تکذیب کرد: نه با عمان فسخ کردم، نه با ایران مذاکره داشتم",
+            text = viewModel.subtitle,
             color = MaterialTheme.colors.White,
             style = MaterialTheme.typography.h2,
         )
+    }
+}
+
+@Composable
+fun PublishersList(viewModel: DiscoverViewModel) {
+    LazyRow(modifier = Modifier.fillMaxWidth().padding(start = 16.dp)) {
+        itemsIndexed(
+            items = viewModel.publishersList,
+            key = { _, item -> item.id },
+        ) { _, item ->
+            PublisherItem(
+                modifier = Modifier.padding(end = 16.dp),
+                model = item,
+                onClick = {
+
+                })
+        }
+    }
+}
+
+@Composable
+fun NewsList(viewModel: DiscoverViewModel) {
+    LazyRow(modifier = Modifier.fillMaxWidth().padding(start = 16.dp)) {
+        itemsIndexed(
+            items = viewModel.newsList,
+            key = { _, item -> item.id },
+        ) { _, item ->
+            HotNewsItem(
+                model = item,
+                onClick = {}
+            )
+        }
     }
 }

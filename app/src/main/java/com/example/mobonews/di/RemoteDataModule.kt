@@ -1,7 +1,10 @@
 package com.example.mobonews.di
 
+import com.example.mobonews.data.api.DiscoverApi
 import com.example.mobonews.data.api.NewsApi
+import com.example.mobonews.data.repository.dataSource.DiscoverRemoteDataSource
 import com.example.mobonews.data.repository.dataSource.NewsRemoteDataSource
+import com.example.mobonews.data.repository.dataSourceImpl.DiscoverRemoteDataSourceImpl
 import com.example.mobonews.data.repository.dataSourceImpl.NewsRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
@@ -19,6 +22,16 @@ object RemoteDataModule {
         newsApi: NewsApi,
     ): NewsRemoteDataSource {
         return NewsRemoteDataSourceImpl(newsApi)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDiscoverRemoteDataSource(
+        discoverApi: DiscoverApi,
+    ): DiscoverRemoteDataSource {
+        return DiscoverRemoteDataSourceImpl(
+            discoverApi = discoverApi,
+        )
     }
 
 }

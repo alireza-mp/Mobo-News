@@ -14,11 +14,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.mobonews.domain.model.Publisher
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PublisherItem(
     modifier: Modifier = Modifier,
+    model: Publisher,
     onClick: () -> Unit,
 ) {
     Card(
@@ -35,7 +37,7 @@ fun PublisherItem(
                 modifier = Modifier.size(66.dp)
                     .clip(MaterialTheme.shapes.medium),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://digimoplus.ir/mobonews/publisher_favorite_news_1.png")
+                    .data(model.imageUrl)
                     .crossfade(true)
                     .build(),
                 contentDescription = null,
@@ -43,7 +45,7 @@ fun PublisherItem(
             )
             Spacer(modifier = Modifier.padding(top = 8.dp))
             Text(
-                text = "زومیت",
+                text = model.title,
                 color = MaterialTheme.colors.primaryVariant,
                 style = MaterialTheme.typography.h3,
             )
@@ -54,9 +56,7 @@ fun PublisherItem(
                 backgroundColor = MaterialTheme.colors.onPrimary,
                 textStyle = MaterialTheme.typography.h2,
                 innerPadding = PaddingValues(vertical = 4.dp, horizontal = 12.dp),
-                onClick = {
-
-                }
+                onClick = onClick
             )
         }
 
