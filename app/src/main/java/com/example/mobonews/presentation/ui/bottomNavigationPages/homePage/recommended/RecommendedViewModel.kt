@@ -32,6 +32,7 @@ constructor(
     val favoriteNewsList: List<FavoriteNews> = _favoriteNewsList
     private val _hotNewsList = mutableStateListOf<HotNews>()
     val hotNewsList: List<HotNews> = _hotNewsList
+    var isLaunchAnimation = true
 
 
     init {

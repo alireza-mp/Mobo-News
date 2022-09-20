@@ -1,10 +1,12 @@
 package com.example.mobonews.presentation.ui.bottomNavigationPages.homePage.recommended
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -12,6 +14,7 @@ import androidx.navigation.NavHostController
 import com.example.mobonews.presentation.navigation.bottomNavigation.BottomNavigationScreens
 import com.example.mobonews.presentation.ui.components.*
 import com.example.mobonews.util.UiState
+import kotlinx.coroutines.delay
 
 @Composable
 fun RecommendedPage(
@@ -47,32 +50,43 @@ private fun Content(viewModel: RecommendedViewModel, navHostController: NavHostC
 
         Spacer(modifier = Modifier.padding(top = 4.dp))
         ListTitle(
+            Modifier.alphaAnimation(
+                enabled = viewModel.isLaunchAnimation,
+                delay = 250,
+                duration = 1000,
+            ),
             padding = PaddingValues(horizontal = 16.dp),
             title = "خبر های داغ",
             onClick = {},
         )
 
-
-        // hot news list
-
         Spacer(modifier = Modifier.padding(top = 8.dp))
+        // hot news list
         HotNewsList(viewModel, navHostController)
 
-
-        // favorite news title
-
         Spacer(modifier = Modifier.padding(top = 8.dp))
+        // favorite news title
         ListTitle(
+            modifier = Modifier.alphaAnimation(
+                enabled = viewModel.isLaunchAnimation,
+                delay = 750,
+                duration = 1000,
+            ),
             padding = PaddingValues(horizontal = 16.dp),
             title = "خبر هایی که علاقه داری",
             onClick = {},
         )
         Spacer(modifier = Modifier.padding(top = 8.dp))
 
-
         // favorite news list
         FavoriteNewsList(viewModel, navHostController)
 
+    }
+
+    // disable first launch animation
+    LaunchedEffect(Unit) {
+        delay(1200)
+        viewModel.isLaunchAnimation = false
     }
 }
 
@@ -83,7 +97,12 @@ private fun FavoriteNewsList(
 ) {
     viewModel.favoriteNewsList.forEachIndexed { _, item ->
         FavoriteNewsItem(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp)
+                .alphaAnimation(
+                    enabled = viewModel.isLaunchAnimation,
+                    delay = 1000,
+                    duration = 1000,
+                ),
             model = item,
             onClick = {
                 // navigate to news detail page
@@ -99,12 +118,16 @@ private fun FavoriteNewsList(
 
 @Composable
 private fun HotNewsList(viewModel: RecommendedViewModel, navHostController: NavHostController) {
-    Row(
+    LazyRow(
         modifier = Modifier.fillMaxWidth()
+            .alphaAnimation(
+                enabled = viewModel.isLaunchAnimation,
+                delay = 500,
+                duration = 1000,
+            )
             .padding(start = 16.dp)
-            .horizontalScroll(rememberScrollState())
     ) {
-        viewModel.hotNewsList.forEachIndexed { _, item ->
+        itemsIndexed(items = viewModel.hotNewsList, key = { _, item -> item.id }) { _, item ->
             HotNewsItem(
                 model = item,
                 onClick = {

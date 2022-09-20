@@ -10,12 +10,13 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun ListTitle(
+    modifier: Modifier = Modifier,
     padding: PaddingValues = PaddingValues(),
     title: String,
     onClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
             .padding(padding),
         verticalAlignment = Alignment.CenterVertically,
     ) {

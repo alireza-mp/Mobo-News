@@ -9,16 +9,13 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import com.example.mobonews.presentation.navigation.bottomNavigation.MainBottomNavigation
 import com.example.mobonews.presentation.ui.components.BottomNavigation
 import com.example.mobonews.presentation.ui.components.TopAppBar
 
 @Composable
-fun MainPage() {
-
-    // bottom navigation controller
-    val bottomNavController = rememberNavController()
+fun MainPage(bottomNavController: NavHostController) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

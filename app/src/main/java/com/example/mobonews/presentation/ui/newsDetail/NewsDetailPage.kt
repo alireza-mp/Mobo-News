@@ -64,7 +64,7 @@ private fun Content(viewModel: NewsDetailViewModel) {
 
         Image(
             modifier = Modifier.fillMaxWidth().height(300.dp)
-                .alphaAnimation(delay = 500, 800),
+                .alphaAnimation(delay = 500, duration = 800),
             painter = rememberAsyncImagePainter(model = model?.imageUrl ?: ""),
             contentDescription = null,
             contentScale = ContentScale.FillBounds

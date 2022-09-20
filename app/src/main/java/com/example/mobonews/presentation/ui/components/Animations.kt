@@ -14,20 +14,22 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-fun Modifier.alphaAnimation(delay: Int, duration: Int) = composed {
-    val anim = remember { Animatable(initialValue = 0f) }
+fun Modifier.alphaAnimation(enabled: Boolean = true, delay: Int, duration: Int) = composed {
+    if (enabled) {
+        val anim = remember { Animatable(initialValue = 0f) }
 
-    LaunchedEffect(Unit) {
-        anim.animateTo(
-            targetValue = 1f,
-            animationSpec = tween(
-                durationMillis = duration,
-                delayMillis = delay,
+        LaunchedEffect(anim) {
+            anim.animateTo(
+                targetValue = 1f,
+                animationSpec = tween(
+                    durationMillis = duration,
+                    delayMillis = delay,
+                )
             )
-        )
-    }
+        }
 
-    this.alpha(anim.value)
+        this.alpha(anim.value)
+    } else this
 }
 
 fun Modifier.offsetXAnimation(delay: Int, duration: Int, startOffset: Dp, endOffset: Dp) =

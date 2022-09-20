@@ -10,6 +10,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
 import com.example.mobonews.presentation.navigation.baseNavigation.MoboNewsNavigation
 import com.example.mobonews.presentation.theme.MoboNewsTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -30,7 +31,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background,
                 ) {
-                    MoboNewsNavigation()
+                    // main navigation controller
+                    val navController = rememberNavController()
+                    // bottom navigation controller
+                    val bottomNavController = rememberNavController()
+                    MoboNewsNavigation(navController, bottomNavController)
                 }
             }
         }
