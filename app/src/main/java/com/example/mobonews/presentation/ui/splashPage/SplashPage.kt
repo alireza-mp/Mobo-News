@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -23,6 +24,13 @@ import kotlinx.coroutines.delay
 fun SplashPage(navController: NavController) {
 
     Box(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colors.background)) {
+
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = painterResource(R.drawable.splash_background),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+        )
 
         Image(
             modifier = Modifier.size(120.dp).align(Alignment.Center),
